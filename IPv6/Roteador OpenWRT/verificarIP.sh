@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Script para verificar se houve alteracao no IPv6 dinamico do roteador
 # Caso a mudanca ocorra, eh iniciado o processo de reconexao do tunel
