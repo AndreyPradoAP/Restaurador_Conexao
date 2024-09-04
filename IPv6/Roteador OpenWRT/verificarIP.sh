@@ -19,7 +19,8 @@ echo "IP da WAN alterado. Reestabelecendo comunicacao"
 
 # Tento enviar o novo IP da WAN para o servidor por meio do SCP
 do
-    scp /etc/flags/local_wan.conf root@$remote_wan:/etc/flags/remote_wan.condone while [ $? -eq 1 ]
+    scp /etc/flags/local_wan.conf root@$remote_wan:/etc/flags/remote_wan.con
+done while [ $? -eq 1 ]
 
 /bin/bash del_connections.sh
 
