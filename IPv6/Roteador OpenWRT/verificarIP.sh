@@ -9,19 +9,11 @@ source /etc/flags/remote_wan.conf
 # Verifico o IPv6 recebido na WAN
 $new_ip = ifconfig eth0 | grep 'inet6 addr: 2' | awk '{print $3}'
 
-if ["$ip_wan" == "$new_ip"]
+if ["$ip_wan" != "$new_ip"]
 then
-    exit 0
+    echo "IP recebido pela WAN alterado. Reestabelcendo comunicação"
+    $new_ip > ip_addr.txt
+    /bin/bash del_conection.sh
 fi
-
-echo "IP da WAN alterado. Reestabelecendo comunicacao"
-"#local_wan='{$new_ip}'" > ip_addr.txt # Salvo o novo IP no arquivo
-
-# Tento enviar o novo IP da WAN para o servidor por meio do SCP
-do
-    scp /etc/flags/local_wan.conf root@$remote_wan:/etc/flags/remote_wan.con
-done while [ $? -eq 1 ]
-
-/bin/bash del_connections.sh
 
 return 0
