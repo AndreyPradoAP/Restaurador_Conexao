@@ -19,7 +19,7 @@ fi
 echo "$new_ip" > /etc/flags/local_wan.conf
 
 # Send the new IP to the server via scp
-scp /etc/flags/local_wan.conf root@186.236.93.218:/etc/flags/remote_wan.conf
+scp /etc/flags/local_wan.conf root@xxx.xxx.xxx.xxx:/etc/flags/remote_wan.conf
 
 /bin/sh del_connections.sh
 
