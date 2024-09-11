@@ -1,19 +1,26 @@
 #!/bin/sh
 
-# Script para verificar se houve alteracao no IPv6 dinamico do roteador
-# Caso a mudanca ocorra, eh iniciado o processo de reconexao do tunel
+# Script to check the changes in the dynamic IPv6 of OpenVPN router 
+# If changes occur, the reconnection process will start
 
-source /etc/flags/local_wan.conf
-source /etc/flags/remote_wan.conf
+# Take the stored IP 
+ip_wan=$(cat /etc/flags/local_wan.conf)
 
-# Verifico o IPv6 recebido na WAN
-$new_ip = ifconfig eth0 | grep 'inet6 addr: 2' | awk '{print $3}'
+# Verify the IPv6 in WAN
+new_ip=$(ifconfig eth0 | grep 'inet6 addr: 2' | awk '{print $3}' | sed 's/\/.*/''/'
 
-if ["$ip_wan" != "$new_ip"]
+# Check that the IPs are the same
+if [ "$ip_wan" = "$new_ip" ]
 then
-    echo "IP recebido pela WAN alterado. Reestabelcendo comunicação"
-    $new_ip > ip_addr.txt
-    /bin/bash del_conection.sh
+        exit 0
 fi
+
+# Save the new IP in the file
+echo "$new_ip" > /etc/flags/local_wan.conf
+
+# Send the new IP to the server via scp
+scp /etc/flags/local_wan.conf root@186.236.93.218:/etc/flags/remote_wan.conf
+
+/bin/sh del_connections.sh
 
 return 0
