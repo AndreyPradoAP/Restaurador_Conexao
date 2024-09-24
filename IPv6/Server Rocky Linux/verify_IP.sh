@@ -5,23 +5,29 @@
 
 source /etc/scripts/del_connections.sh
 source /etc/scripts/config_connections.sh
- 
+
 # Take the backup IP
 ip_remote_bkp=$(cat /etc/flags/remote_wan_bkp.conf)
 # Take new remote IP
 ip_remote_new=$(cat /etc/flags/remote_wan.conf)
-# Check that the IPs are the same
 
+# Check that the IPs are the same
 if [ "$ip_remote_bkp" = "$ip_remote_new" ]
 then
-       exit 0
-fi      
+        exit 0
+fi
+
+echo "$(date +'%D %H:%M:%S') - IP Changed [Old IP: '$ip_remote_bkp' | New IP: '$ip_remote_new']"
+
+killall ping
 
 # Save the new IP in the file
 echo "$ip_remote_new" > /etc/flags/remote_wan_bkp.conf
- 
+
 # delete configs for reconfig
 deleteConfigs
 configCon $ip_remote_new
- 
+
+echo "$(date +'%D %H:%M:%S') - Reconnection successful\n\n" >> /var/log/recon.log
+
 exit 0
