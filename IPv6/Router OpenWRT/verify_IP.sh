@@ -1,20 +1,22 @@
 #!/bin/sh                                                                                                                                                               
                                                                                                                                                                         
 # Script to check the changes in the dynamic IPv6 of OpenVPN router                                                                                                     
-# If changes occur, the reconnection process will start                                                                                                                                                                                                                                                               
-                                                                                                                                                                        
+# If changes occur, the reconnection process will start
+                                                                                                                                                                    
 # Take the stored IPs                                                                                                                                                   
 ip_server=$(cat /etc/flags/remote_wan.conf)                                                                                                                             
 ip_wan=$(cat /etc/flags/local_wan.conf)                                                                                                                                 
                                                                                                                                                                         
 # Verify the IPv6 in WAN                                                                                                                                                
 new_ip=$(ip -br addr show eth0 | awk '{print $4}' | cut -d '/' -f 1)                                                                                                    
-                                                                                                                                                                        
-# Check that the IPs are the same                                                                                                                                       
-if [ "$ip_wan" = "$new_ip" ]                                                                                                                                            
-then                                                                                                                                                                    
-        exit 0                                                                                                                                                          
-fi                                                                                                                                                                      
+
+sub_ip=${new_ip:0:4}
+
+# Check that the IPs are the same
+if [ "$ip_wan" = "$new_ip" -o "$sub_ip" = "fe80" ]
+then
+        exit 0
+fi                                                                                                                                                               
                                                                                                                                                                         
 echo "$(date +'%D %H:%M:%S') - IP Changed [Old IP: '$ip_wan' | New IP: '$new_ip']"                                                                                      
                                                                                                                                                                         
