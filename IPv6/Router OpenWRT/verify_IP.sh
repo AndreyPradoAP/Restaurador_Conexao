@@ -13,7 +13,7 @@ new_ip=$(ip -br addr show eth0 | awk '{print $4}' | cut -d '/' -f 1)
 sub_ip=${new_ip:0:4}
 
 # Check that the IPs are the same
-if [ "$ip_wan" = "$new_ip" -o "$sub_ip" = "fe80" ]
+if [ "$ip_wan" = "$new_ip" -o "$sub_ip" = "fe80" -o "$new_ip" = "" ]
 then
         exit 0
 fi                                                                                                                                                               
