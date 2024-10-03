@@ -15,7 +15,7 @@ checkCommand() {
                         chmod +x /etc/scripts/verify_IP.sh
                         break
                 else
-                        echo "$(date +'%D %H:%M:%S') - $reply_fail" >> /var/log/recon.log
+                        echo "$(date +'%D %H:%M:%S') - $reply_fail. Trying again in 5 seconds..." >> /var/log/recon.log
                         chmod -x /etc/scripts/verify_IP.sh
                         sleep 5
                 fi
