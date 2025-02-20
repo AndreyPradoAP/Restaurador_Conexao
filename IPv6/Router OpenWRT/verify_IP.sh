@@ -54,12 +54,12 @@ fi
 echo "$(date +'%D %H:%M:%S') - Gretap tunnel successfully deleted" >> /var/log/recon.log                                                                                
                                                                                                                                                                         
 echo "$(date +'%D %H:%M:%S') - Start configCon script" >> /var/log/recon.log                                                                                            
-# Create and enable ip6gretap tunnel                                                                                                                                    
-ip link add name gretap1 type ip6gretap local "$new_ip" remote xxxx::xxxx                                                                                       
-ip addr add 10.0.0.2/30 dev gretap1                                                                                                                                     
-ip link set gretap1 up                                                                                                                                                  
+# Create and enable ip6gre tunnel                                                                                                                                    
+ip link add name gre1 type ip6gre local "$new_ip" remote xxxx::xxxx                                                                                       
+ip addr add 10.0.0.2/30 dev gre1                                                                                                                                     
+ip link set gre1 up                                                                                                                                                  
                                                                                                                                                                         
-echo "$(date +'%D %H:%M:%S') - new gretap tunnel created with local "$new_ip" remote xxxx::xxxx" >> /var/log/recon.log                                          
+echo "$(date +'%D %H:%M:%S') - new gre tunnel created with local "$new_ip" remote xxxx::xxxx" >> /var/log/recon.log                                          
                                                                                                                                                                         
 # Create routes Router -> Server                                                                                                                                        
 ip route add 10.37.94.16/30 via 10.0.0.1                                                                                                                                
