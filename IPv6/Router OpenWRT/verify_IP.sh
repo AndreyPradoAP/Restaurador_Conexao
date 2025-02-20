@@ -40,7 +40,7 @@ do
         fi                                                                                                                                                              
 done                                                                                                                                                                    
                                                                                                                                                                         
-echo "$(date +'%D %H:%M:%S') - Script deleteConfigs start" >> /var/log/recon.log                                                                                        
+echo "$(date +'%D %H:%M:%S') - Start Del Old GRE" >> /var/log/recon.log                                                                                        
 ip link delete gretap1                                                                                                                                                  
 gretap_con=$(ifconfig | grep gretap1 | awk '{print $1}')                                                                                                                
                                                                                                                                                                         
@@ -53,7 +53,7 @@ fi
                                                                                                                                                                         
 echo "$(date +'%D %H:%M:%S') - Gretap tunnel successfully deleted" >> /var/log/recon.log                                                                                
                                                                                                                                                                         
-echo "$(date +'%D %H:%M:%S') - Start configCon script" >> /var/log/recon.log                                                                                            
+echo "$(date +'%D %H:%M:%S') - Start GRE Config" >> /var/log/recon.log                                                                                            
 # Create and enable ip6gre tunnel                                                                                                                                    
 ip link add name gre1 type ip6gre local "$new_ip" remote xxxx::xxxx                                                                                       
 ip addr add 10.0.0.2/30 dev gre1                                                                                                                                     
